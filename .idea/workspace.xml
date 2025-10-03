@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47ea6a0c-cdb7-4700-9dae-1602358745db" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/CinemaSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CinemaSystem.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Projetos.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cinemasystem/model/Assento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cinemasystem/model/Assento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cinemasystem/model/Filme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cinemasystem/model/Filme.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cinemasystem/model/Pagamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cinemasystem/model/Pagamento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cinemasystem/model/Sessao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cinemasystem/model/Sessao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cinemasystem/services/PerfilUsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cinemasystem/services/PerfilUsuarioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
