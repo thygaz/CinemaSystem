@@ -1,7 +1,7 @@
 package com.cinemasystem.services;
 
-import model.Compra;
-import model.Usuario;
+import com.cinemasystem.model.Compra;
+import com.cinemasystem.model.Usuario;
 import java.util.List;
 
 /**

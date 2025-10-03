@@ -1,3 +1,5 @@
+package com.cinemasystem.model;
+
 public class Filme {
 
     // Atributos
@@ -5,7 +7,7 @@ public class Filme {
     private String nome;
     private int classificacao;
 
-    // Getters e Setters
+    //Getters
     public int getId() {
         return id;
     }
@@ -18,6 +20,8 @@ public class Filme {
         return nome;
     }
 
+
+    //Setters
     public void setNome(String nome) {
         this.nome = nome;
     }
