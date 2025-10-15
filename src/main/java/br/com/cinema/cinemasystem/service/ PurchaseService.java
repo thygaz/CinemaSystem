@@ -1,4 +1,4 @@
-package com.cinemasystemspring.service;
+package br.com.cinema.cinemasystem.service;
 
 
 import com.cinemasystemspring.dto.CreatePurchaseRequestDTO;
@@ -6,10 +6,9 @@ import com.cinemasystemspring.dto.MovieSessionDTO;
 import com.cinemasystemspring.dto.PurchaseDTO;
 import com.cinemasystemspring.dto.SeatDTO;
 import com.cinemasystemspring.model.*;
-import com.cinemasystemspring.repository.PurchaseRepository;
+import br.com.cinema.cinemasystem.repository.PurchaseRepository;
 import com.cinemasystemspring.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

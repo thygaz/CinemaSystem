@@ -1,4 +1,4 @@
-package com.cinemasystemspring.model;
+package br.com.cinema.cinemasystem.model;
 
 
 import jakarta.persistence.*;

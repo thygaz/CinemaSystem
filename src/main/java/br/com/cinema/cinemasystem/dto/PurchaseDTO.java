@@ -1,4 +1,4 @@
-package com.cinemasystemspring.dto;
+package br.com.cinema.cinemasystem.dto;
 
 import lombok.Data;
 

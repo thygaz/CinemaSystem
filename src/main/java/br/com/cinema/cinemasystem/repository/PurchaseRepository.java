@@ -1,4 +1,4 @@
-package com.cinemasystemspring.repository;
+package br.com.cinema.cinemasystem.repository;
 
 import com.cinemasystemspring.model.Purchase;
 import org.springframework.data.jpa.repository.JpaRepository;

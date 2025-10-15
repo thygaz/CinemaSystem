@@ -1,9 +1,9 @@
-package com.cinemasystemspring.controller;
+package br.com.cinema.cinemasystem.controller;
 
 
 import com.cinemasystemspring.dto.CreatePurchaseRequestDTO;
 import com.cinemasystemspring.dto.PurchaseDTO;
-import com.cinemasystemspring.service.PurchaseService;
+import br.com.cinema.cinemasystem.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
