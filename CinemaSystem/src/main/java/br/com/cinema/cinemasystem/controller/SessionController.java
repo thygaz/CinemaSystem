@@ -10,12 +10,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sessions")
 public class SessionController {
 
-    private final SessionService sessionService;
-
-    public SessionController(SessionService sessionService) {
-        this.sessionService = sessionService;
-    }
-
-    @PostMapping
-    public Session save(@RequestBody )
 }
