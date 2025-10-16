@@ -32,14 +32,14 @@ public class Purchase {
     @ToString.Exclude
     private MovieSession movieSession;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "purchase_seats",
-            joinColumns = @JoinColumn(name = "purchase_id"),
-            inverseJoinColumns = @JoinColumn(name = "seat_id")
-    )
-    @ToString.Exclude
-    private Set<Seat> seats;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "purchase_seats",
+//            joinColumns = @JoinColumn(name = "purchase_id"),
+//            inverseJoinColumns = @JoinColumn(name = "seat_id")
+//    )
+//    @ToString.Exclude
+//    private Set<Seat> seats;
 
     @Column(nullable = false)
     private LocalDateTime purchaseTimestamp;

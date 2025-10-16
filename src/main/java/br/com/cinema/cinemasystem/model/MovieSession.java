@@ -1,7 +1,6 @@
 package br.com.cinema.cinemasystem.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +13,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "sessions")
 public class MovieSession {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 }

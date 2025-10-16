@@ -25,10 +25,10 @@ public class User {
     @Column
     private String name;
 
-    @Column(length = 50)
+    @Column
     private String email;
 
-    @Column(length = 25)
+    @Column
     private String password;
 
 
