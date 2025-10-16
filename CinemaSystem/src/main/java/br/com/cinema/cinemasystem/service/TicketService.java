@@ -1,6 +1,8 @@
 package br.com.cinema.cinemasystem.service;
 
+import br.com.cinema.cinemasystem.model.Session;
 import br.com.cinema.cinemasystem.model.Ticket;
+import br.com.cinema.cinemasystem.repository.SessionRepository;
 import br.com.cinema.cinemasystem.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +13,20 @@ import java.util.UUID;
 @Service
 public class TicketService {
 
+    private final SessionRepository sessionRepository;
     private TicketRepository ticketRepository;
 
-    public TicketService(TicketRepository ticketRepository) {
+    public TicketService(TicketRepository ticketRepository, SessionRepository sessionRepository) {
         this.ticketRepository = ticketRepository;
+        this.sessionRepository = sessionRepository;
     }
 
     public Ticket save(Ticket ticket) {
         // precisa validar se sessão a existe
+        Session session = sessionRepository.findById(ticket.getSession().getUuid())
+                .orElseThrow(() -> new RuntimeException("Não foi possível criar o ingresso, sessão não encontrada"));
+
+        return ticketRepository.save(ticket);
     }
 
     public List<Ticket> findAll() {

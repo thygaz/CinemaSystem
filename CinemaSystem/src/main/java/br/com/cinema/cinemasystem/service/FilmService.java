@@ -33,7 +33,7 @@ public class FilmService {
         if (filmRepository.existsById(uuid)) {
             filmRepository.deleteById(uuid);
         } else {
-            throw new RuntimeException("Filme não encontrado");
+            throw new RuntimeException("Filme não encontrado.");
         }
     }
 }
