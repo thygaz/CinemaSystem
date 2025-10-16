@@ -11,7 +11,7 @@ import java.util.UUID;
 @Service
 public class FilmService {
 
-    private FilmRepository filmRepository;
+    private final FilmRepository filmRepository;
 
     public FilmService(FilmRepository filmRepository) {
         this.filmRepository = filmRepository;

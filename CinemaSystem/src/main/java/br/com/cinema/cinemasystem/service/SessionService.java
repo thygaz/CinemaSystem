@@ -14,7 +14,7 @@ import java.util.UUID;
 public class SessionService {
 
     private final FilmRepository filmRepository;
-    private SessionRepository sessionRepository;
+    private final SessionRepository sessionRepository;
 
     public SessionService(SessionRepository sessionRepository, FilmRepository filmRepository) {
         this.sessionRepository = sessionRepository;

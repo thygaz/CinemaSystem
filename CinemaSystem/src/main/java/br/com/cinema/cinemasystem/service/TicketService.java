@@ -14,7 +14,7 @@ import java.util.UUID;
 public class TicketService {
 
     private final SessionRepository sessionRepository;
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
 
     public TicketService(TicketRepository ticketRepository, SessionRepository sessionRepository) {
         this.ticketRepository = ticketRepository;
