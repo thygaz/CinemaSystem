@@ -44,4 +44,12 @@ public class SessionService {
 
         return sessionRepository.findByFilm(film);
     }
+
+    public void delete(UUID uuid) {
+        if (sessionRepository.existsById(uuid)) {
+            sessionRepository.deleteById(uuid);
+        } else {
+            throw new RuntimeException("Sessão não encontrada.");
+        }
+    }
 }

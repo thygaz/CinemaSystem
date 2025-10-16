@@ -36,4 +36,12 @@ public class TicketService {
     public Optional<Ticket> findById(UUID uuid) {
         return ticketRepository.findById(uuid);
     }
+
+    public void delete(UUID uuid) {
+        if (ticketRepository.existsById(uuid)) {
+            ticketRepository.deleteById(uuid);
+        } else {
+            throw new RuntimeException("Ticket não encontrado.");
+        }
+    }
 }
