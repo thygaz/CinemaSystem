@@ -22,16 +22,15 @@ public class User {
     private Long id;
 
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
-
-    @OneToMany(mappedBy = "user")
-    private List<Purchase> purchases;
+//    @OneToMany(mappedBy = "user")
+//    private List<Purchase> purchases;
 }

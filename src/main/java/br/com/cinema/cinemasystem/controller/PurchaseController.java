@@ -1,8 +1,7 @@
 //package br.com.cinema.cinemasystem.controller;
 //
 //
-//import com.cinemasystemspring.dto.CreatePurchaseRequestDTO;
-//import com.cinemasystemspring.dto.PurchaseDTO;
+//import br.com.cinema.cinemasystem.model.Purchase;
 //import br.com.cinema.cinemasystem.service.PurchaseService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.HttpStatus;
@@ -19,9 +18,9 @@
 //    private PurchaseService purchaseService;
 //
 //    @PostMapping
-//    public ResponseEntity<PurchaseDTO> createPurchase(@RequestBody CreatePurchaseRequestDTO requestDTO){
-//        PurchaseDTO newPurchaseDTO = purchaseService.createPurchase(requestDTO);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(newPurchaseDTO);
+//    public ResponseEntity<Purchase> createPurchase(@RequestBody Purchase purchase){
+//        Purchase newPurchase = purchaseService.createPurchase(purchase);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(newPurchase);
 //    }
 //
 //    @GetMapping("/{purchaseId}")

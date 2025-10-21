@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/users")
 public class UserController {
@@ -27,6 +29,10 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping
+    public List<User> findAllUsers(){
+        return userService.getAllUsers();
+    }
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails){
         User updateUser = userService.updateUser(id, userDetails);

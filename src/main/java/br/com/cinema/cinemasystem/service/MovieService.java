@@ -5,6 +5,7 @@ import br.com.cinema.cinemasystem.model.Movie;
 import br.com.cinema.cinemasystem.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class MovieService {
@@ -39,5 +40,9 @@ public class MovieService {
     public void deleteMovie(Long id) {
         Movie deleteMovie = movieRepository.findMovieById(id);
         movieRepository.delete(deleteMovie);
+    }
+
+    public List<Movie> getplayingMovies(){
+        return movieRepository.findAll();
     }
 }
