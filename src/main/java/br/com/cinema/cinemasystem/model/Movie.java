@@ -1,16 +1,13 @@
 package br.com.cinema.cinemasystem.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "movies")
 public class Movie {
@@ -19,7 +16,7 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @Column
@@ -27,4 +24,10 @@ public class Movie {
 
     @Column
     private String synopsis;
+
+    @Column
+    private String genre;
+
+    @Column
+    private String urlPoster;
 }

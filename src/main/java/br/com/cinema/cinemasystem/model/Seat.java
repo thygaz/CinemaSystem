@@ -6,29 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "sessions")
-public class MovieSession {
+@Table(name= "seats")
+public class Seat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private LocalDateTime sessionTime;
+    private Character rowIdentifier;
 
-    @ManyToOne
-    @JoinColumn(name = "movies_id")
-    private Movie movie;
-
-    @OneToMany
-    @JoinColumn(name = "seats_id")
-    private List<Seat> seats;
+    @Column
+    private Integer seatNumber;
 }

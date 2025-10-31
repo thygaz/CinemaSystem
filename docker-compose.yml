@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_DB: cinemasystem2_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     # Mapeamento de portas: conecta a porta 5432 de DENTRO do contêiner
     # com a porta 5432 de FORA (no seu PC). Útil para acessar o DB com DBeaver, etc.
     ports:
