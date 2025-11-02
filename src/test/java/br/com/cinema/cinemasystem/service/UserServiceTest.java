@@ -60,9 +60,7 @@ class UserServiceTest {
 
         when(userRepositoryMock.findByEmail(userTeste.getEmail())).thenReturn(Optional.of(userExistente));
 
-        Assertions.assertThrows(EmailAlreadyExistsException.class, () -> {
-            userService.createUser(userTeste);
-        });
+        Assertions.assertThrows(EmailAlreadyExistsException.class, () -> userService.createUser(userTeste));
         verify(userRepositoryMock, never()).save(any(User.class));
     }
 
