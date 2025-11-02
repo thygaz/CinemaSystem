@@ -24,11 +24,20 @@ public class MovieSession {
     @Column
     private LocalDateTime sessionTime;
 
+    @Column
+    private double ticketPrice;
+
     @ManyToOne
-    @JoinColumn(name = "movies_id")
+    @JoinColumn(name = "movies_id", nullable = false)
     private Movie movie;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sala_id", nullable = false)
+    private Theater theater;
+
     @OneToMany
-    @JoinColumn(name = "seats_id")
+    @JoinColumn(name = "seats_id", nullable = false)
     private List<Seat> seats;
+
+
 }
