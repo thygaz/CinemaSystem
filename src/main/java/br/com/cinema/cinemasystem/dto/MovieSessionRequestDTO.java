@@ -1,7 +1,6 @@
 package br.com.cinema.cinemasystem.dto;
 
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDateTime;
 

@@ -98,9 +98,7 @@ class MovieSessionServiceTest {
 
         ResourceNotFoundException exception = assertThrows(
                 ResourceNotFoundException.class,
-                () -> {
-                    movieSessionService.createSession(requestDTO);
-                }
+                () -> movieSessionService.createSession(requestDTO)
         );
 
         assertEquals("Filme não encontrado com o id: " + requestDTO.getMovieId(), exception.getMessage());
@@ -115,9 +113,7 @@ class MovieSessionServiceTest {
 
         ResourceNotFoundException exception = assertThrows(
                 ResourceNotFoundException.class,
-                () -> {
-                    movieSessionService.createSession(requestDTO);
-                }
+                () -> movieSessionService.createSession(requestDTO)
         );
 
         assertEquals("Sala não encontrada com o id: " + requestDTO.getTheaterId(), exception.getMessage());

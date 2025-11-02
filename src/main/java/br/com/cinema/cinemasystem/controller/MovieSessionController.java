@@ -13,7 +13,7 @@ import java.util.List;
 @RestController("/api/sessions")
 public class MovieSessionController {
 
-    private MovieSessionService movieSessionService;
+    private final MovieSessionService movieSessionService;
 
     public MovieSessionController(MovieSessionService movieSessionService){
         this.movieSessionService = movieSessionService;
