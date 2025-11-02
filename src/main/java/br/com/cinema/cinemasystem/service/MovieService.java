@@ -25,8 +25,8 @@ public class MovieService {
     public Movie updateMovie(Long id, Movie movieDetails){
         Movie existingMovie = findMovieById(id);
 
-        if(movieDetails.getName() != null){
-            existingMovie.setName(movieDetails.getName());
+        if(movieDetails.getTitle() != null){
+            existingMovie.setTitle(movieDetails.getTitle());
         }
         if(movieDetails.getDurationInMinutes() != null){
             existingMovie.setDurationInMinutes(movieDetails.getDurationInMinutes());
