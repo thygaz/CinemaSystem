@@ -1,41 +1,27 @@
-# Lista de todos os serviços (contêineres) que compõem nosso ambiente.
+
 services:
 
-  # Serviço 1: Nosso banco de dados PostgreSQL.
   db:
-    image: postgres:15-alpine  # Usa uma imagem oficial e leve do Postgres.
+    image: postgres:15-alpine
     container_name: cinemasystem-db
-    # Variáveis de ambiente para configurar o banco de dados na primeira vez que ele subir.
-    # Devem ser as mesmas do seu application.properties!
+
     environment:
       POSTGRES_DB: cinemasystem2_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    # Mapeamento de portas: conecta a porta 5432 de DENTRO do contêiner
-    # com a porta 5432 de FORA (no seu PC). Útil para acessar o DB com DBeaver, etc.
+      POSTGRES_PASSWORD: 1234
+
     ports:
       - "5432:5432"
 
-  # Serviço 2: Nossa aplicação Spring Boot.
   app:
-    # 'build: .' diz ao Docker para construir uma imagem usando o Dockerfile
-    # que está na pasta atual.
     build: .
     container_name: cinemasystem-app
-    # 'depends_on' garante que o serviço 'db' será iniciado ANTES do serviço 'app'.
-    # Isso evita que sua API tente se conectar a um banco que ainda não subiu.
     depends_on:
       - db
-    # Mapeia a porta 8080 de DENTRO do contêiner com a porta 8080 do seu PC.
-    # É isso que permite você acessar a API em http://localhost:8080.
     ports:
       - "8080:8080"
-    # Variáveis de ambiente para a APLICAÇÃO.
-    # Elas sobrescrevem as que estão no seu application.properties.
+
     environment:
-      # AQUI ESTÁ A MÁGICA:
-      # A URL de conexão aponta para 'db', que é o nome do serviço do banco de dados.
-      # O Docker cria uma rede interna onde os contêineres se comunicam por esses nomes.
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/cinemasystem2_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 1234
