@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+class UserServiceTest {
 
     @Mock
     private UserRepository userRepositoryMock;
@@ -26,7 +26,7 @@ public class UserServiceTest {
     private UserService userService;
 
     @Test
-    public void deveCriarUsuarioComsSucesso(){
+    public void deveCriarUsuarioComSucesso(){
 
         User userTeste = new User();
         userTeste.setName("Teste");
@@ -80,3 +80,4 @@ public class UserServiceTest {
         Assertions.assertEquals("teste@gmail.com", userFound.getEmail());
     }
 }
+
