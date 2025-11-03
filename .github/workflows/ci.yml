@@ -1,0 +1,20 @@
+#name: CI/CD do CinemaSystem
+#
+#on:
+#  push:
+#    branches: [ master ]
+#
+#  pull_request:
+#    branches: [ master ]
+#
+#jobs:
+#
+#  build-and-test:
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: 1. Baixar o código (Checkout)
+#        uses: actions/checkout@v4
+#
+#      - name: 2. Configurar o ambiente da sua linguagem

@@ -2,7 +2,6 @@ package br.com.cinema.cinemasystem.controller;
 
 import br.com.cinema.cinemasystem.model.User;
 import br.com.cinema.cinemasystem.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,11 @@ import java.util.List;
 @RequestMapping("api/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user){
@@ -33,13 +35,13 @@ public class UserController {
     public List<User> findAllUsers(){
         return userService.getAllUsers();
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails){
         User updateUser = userService.updateUser(id, userDetails);
 
         return ResponseEntity.ok(updateUser);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
