@@ -19,10 +19,12 @@ jobs:
 
       - name: 2. Configurar Node.js (necessário para a action)
         uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
       - name: 3. Rodar o Semantic Release
         uses: cycjimmy/semantic-release-action@v4
         with:
           semantic_version: 19
         env:
-          GITHUB_TOKEN ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

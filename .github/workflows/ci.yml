@@ -11,6 +11,21 @@ jobs:
   build-e-teste:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: cinemasystem
+          POSTGRES_USER: youruser
+          POSTGRES_PASSWORD: yourpassword
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: 1. Baixar o código
         uses: actions/checkout@v3
@@ -27,3 +42,7 @@ jobs:
 
       - name: 3. Rodar os Testes
         run: mvn test
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/cinemasystem
+          SPRING_DATASOURCE_USERNAME: youruser
+          SPRING_DATASOURCE_PASSWORD: yourpassword
