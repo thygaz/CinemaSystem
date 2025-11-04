@@ -43,6 +43,6 @@ jobs:
       - name: 3. Rodar os Testes
         run: mvn test
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/cinemasystem
+          SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cinemasystem
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: yourpassword
