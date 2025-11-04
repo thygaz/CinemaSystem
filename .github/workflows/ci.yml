@@ -3,10 +3,10 @@ name: CI - Build e Teste do CinemaSystem
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 jobs:
   build-e-teste:
     runs-on: ubuntu-latest
