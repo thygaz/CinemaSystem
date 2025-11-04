@@ -16,7 +16,7 @@ jobs:
         image: postgres:15-alpine
         env:
           POSTGRES_DB: cinemasystem
-          POSTGRES_USER: youruser
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: yourpassword
         ports:
           - 5432:5432
@@ -44,5 +44,5 @@ jobs:
         run: mvn test
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/cinemasystem
-          SPRING_DATASOURCE_USERNAME: youruser
+          SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: yourpassword
