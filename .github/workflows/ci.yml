@@ -16,15 +16,14 @@ jobs:
         image: postgres:15-alpine
         env:
           POSTGRES_DB: cinemasystem
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: yourpassword
+          POSTGRES_HOST_AUTH_METHOD: trust # Desabilita a autenticação por senha
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+
+    env:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/cinemasystem
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
 
     steps:
       - name: 1. Baixar o código
@@ -37,12 +36,8 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: 2. Rodar o Build
-        run: mvn clean package
+      - name: 2. Esperar o Banco de Dados iniciar
+        run: echo "Esperando 30s pelo Postgres..." && sleep 30
 
-      - name: 3. Rodar os Testes
-        run: mvn test
-        env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cinemasystem
-          SPRING_DATASOURCE_USERNAME: postgres
-          SPRING_DATASOURCE_PASSWORD: yourpassword
+      - name: 3. Rodar Build e Testes
+        run: mvn clean verify -e
