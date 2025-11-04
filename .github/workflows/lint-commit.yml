@@ -1,0 +1,16 @@
+name: Lint - Validação de commits
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  commit-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Baixar o código
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 2. Validar mensagens de commit
+        uses: wagoid/commitlint-github-action@v5
