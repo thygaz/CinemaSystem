@@ -32,10 +32,10 @@ public class FilmController {
     }
 
     @GetMapping(name = "/films/{uuid}")
-    public ResponseEntity<?> findById(@PathVariable UUID uuid) {
-        Optional<Film> film = filmService.findById(uuid);
-
-        return ResponseEntity.ok(film);
+    public ResponseEntity<FilmResponseDTO> findById(@PathVariable UUID uuid) {
+        return filmService.findById(uuid)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(name = "/films/{uuid}")

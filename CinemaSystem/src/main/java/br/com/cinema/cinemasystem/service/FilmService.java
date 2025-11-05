@@ -20,13 +20,10 @@ public class FilmService {
     }
 
     public FilmResponseDTO create(FilmRequestDTO filmRequestDTO) {
-        // 1. Converte DTO para Entidade (direto aqui)
         Film film = new Film(filmRequestDTO.name());
 
-        // 2. Salva no banco de dados
         Film savedFilm = filmRepository.save(film);
 
-        // 3. Converte Entidade para DTO de resposta (direto aqui)
         return new FilmResponseDTO(savedFilm.getUuid(), savedFilm.getName());
     }
 
@@ -37,8 +34,9 @@ public class FilmService {
                 .toList();
     }
 
-    public Optional<Film> findById(UUID uuid) {
-        return filmRepository.findById(uuid);
+    public Optional<FilmResponseDTO> findById(UUID uuid) {
+        return filmRepository.findById(uuid)
+                .map(film -> new FilmResponseDTO(film.getUuid(), film.getName()));
     }
 
     public void delete(UUID uuid) {
