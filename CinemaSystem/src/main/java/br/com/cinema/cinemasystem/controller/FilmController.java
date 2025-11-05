@@ -1,5 +1,7 @@
 package br.com.cinema.cinemasystem.controller;
 
+import br.com.cinema.cinemasystem.dto.FilmRequestDTO;
+import br.com.cinema.cinemasystem.dto.FilmResponseDTO;
 import br.com.cinema.cinemasystem.model.Film;
 import br.com.cinema.cinemasystem.service.FilmService;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +22,12 @@ public class FilmController {
     }
 
     @PostMapping
-    public Film save(@RequestBody Film film) {
-        return filmService.save(film);
+    public FilmResponseDTO save(@RequestBody FilmRequestDTO filmRequestDTO) {
+        return filmService.create(filmRequestDTO);
     }
 
     @GetMapping(name = "/films/")
-    public List<Film> listAll() {
+    public List<FilmResponseDTO> listAll() {
         return filmService.findAll();
     }
 

@@ -30,8 +30,11 @@ public class FilmService {
         return new FilmResponseDTO(savedFilm.getUuid(), savedFilm.getName());
     }
 
-    public List<Film> findAll() {
-        return filmRepository.findAll();
+    public List<FilmResponseDTO> findAll() {
+        return filmRepository.findAll()
+                .stream()
+                .map(film -> new FilmResponseDTO(film.getUuid(), film.getName()))
+                .toList();
     }
 
     public Optional<Film> findById(UUID uuid) {
