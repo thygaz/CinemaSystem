@@ -19,13 +19,9 @@ public class FilmService {
         this.filmRepository = filmRepository;
     }
 
-    public Film save(Film film) {
-        return filmRepository.save(film);
-    }
-
     public FilmResponseDTO create(FilmRequestDTO filmRequestDTO) {
         // 1. Converte DTO para Entidade (direto aqui)
-        Film film = new Film(null, filmRequestDTO.name());
+        Film film = new Film(filmRequestDTO.name());
 
         // 2. Salva no banco de dados
         Film savedFilm = filmRepository.save(film);
