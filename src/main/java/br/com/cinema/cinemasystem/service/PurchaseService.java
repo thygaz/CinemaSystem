@@ -1,94 +1,94 @@
-//package br.com.cinema.cinemasystem.service;
-//
-//import jakarta.transaction.Transactional;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//@Service
-//@Transactional
-//public class PurchaseService {
-//
-//    @Autowired
-//    private PurchaseRepository purchaseRepository;
-//
-//    @Autowired
-//    private UserService userService;
-//
-//    @Autowired
-//    private MovieSessionService movieSessionService;
-//
-//    @Autowired
-//    private SeatRepository seatRepository;
-//
-//    public Purchase createPurchase(Purchase purchase){
-//
-//        User user = userService.findUserEntityById(requestDTO.getUserId());
-//        MovieSession session = movieSessionService.findSessionEntityById(requestDTO.getMovieSessionId());
-//        Set<Long> requestSeatIds = requestDTO.getSeatIds();
-//
-//        Set<Long> occupiedSeatIds = purchaseRepository.findOccupiedIds(session.getId(), requestSeatIds);
-//
-//        if(!occupiedSeatIds.isEmpty()){
-//            throw new IllegalStateException("Os seguintes assentos já estão ocupados: " + occupiedSeatIds);
-//        }
-//
-//        Set<Seat> seats = new HashSet<>(seatRepository.findAllById(requestDTO.getSeatIds()));
-//
-//        Purchase newPurchase = new Purchase();
-//        newPurchase.setUser(user);
-//        newPurchase.setMovieSession(session);
-//        newPurchase.setSeats(seats);
-//        newPurchase.setPurchaseTimestamp(LocalDateTime.now());
-//
-//        Purchase savedPurchase = purchaseRepository.save(newPurchase);
-//
-//        return convertToDTO(savedPurchase);
-//    }
-//
-//    @Transactional(readOnly = true)
-//    public PurchaseDTO findPurchaseById(Long purchaseId){
-//        Purchase purchase = purchaseRepository.findById(purchaseId)
-//                .orElseThrow(() -> new RuntimeException("Compra não encontrada com o id " + purchaseId));
-//
-//        return convertToDTO(purchase);
-//    }
-//
-//    @Transactional(readOnly = true)
-//    public List<PurchaseDTO> findPurchasesByUserId(Long userId){
-//        userService.findUserEntityById(userId);
-//
-//        return purchaseRepository.findByUserId(userId)
-//                .stream()
-//                .map(this::convertToDTO)
-//                .collect(Collectors.toList());
-//    }
-//    private PurchaseDTO convertToDTO(Purchase purchase){
-//        Set<SeatDTO> seatDTOs = purchase.getSeats().stream()
-//                .map(seat -> {
-//                    SeatDTO seatDTO = new SeatDTO();
-//
-//
-//                    seatDTO.setId(seat.getId());
-//                    seatDTO.setRowIdentifier(seat.getRowIdentifier());
-//                    seatDTO.setSeatNumber(seat.getSeatNumber());
-//
-//                    return seatDTO;
-//                })
-//                .collect(Collectors.toSet());
-//
-//        MovieSessionDTO sessionDTO = movieSessionService.convertToDTO(purchase.getMovieSession());
-//
-//        PurchaseDTO purchaseDTO = new PurchaseDTO();
-//        purchaseDTO.setId(purchase.getId());
-//        purchaseDTO.setPurchaseTimestamp(purchase.getPurchaseTimestamp());
-//        purchaseDTO.setUserName(purchase.getUser().getName());
-//        purchaseDTO.setMovieSession(sessionDTO);
-//        purchaseDTO.setSeats(seatDTOs);
-//
-//        return purchaseDTO;
-//    }
-//
-//}
-//
-//
-//}
+package br.com.cinema.cinemasystem.service;
+
+import br.com.cinema.cinemasystem.dto.PurchaseRequestDTO;
+import br.com.cinema.cinemasystem.model.*;
+import br.com.cinema.cinemasystem.repository.*;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Service
+public class PurchaseService {
+
+    private final PurchaseRepository purchaseRepository;
+    private final UserRepository userRepository;
+    private final MovieSessionRepository movieSessionRepository;
+    private final SeatService seatService;
+    private final PaymentService paymentService;
+    private final TicketService ticketService;
+
+    public PurchaseService(PurchaseRepository purchaseRepository,
+                           UserRepository userRepository,
+                           MovieSessionRepository movieSessionRepository,
+                           SeatService seatService,
+                           PaymentService paymentService,
+                           TicketService ticketService) {
+        this.purchaseRepository = purchaseRepository;
+        this.userRepository = userRepository;
+        this.movieSessionRepository = movieSessionRepository;
+        this.seatService = seatService;
+        this.paymentService = paymentService;
+        this.ticketService = ticketService;
+    }
+
+    @Transactional
+    public Purchase createPurchase(PurchaseRequestDTO requestDTO) {
+
+        User user = userRepository.findById(requestDTO.userId())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado: " + requestDTO.userId()));
+
+        MovieSession session = movieSessionRepository.findById(requestDTO.movieSessionId())
+                .orElseThrow(() -> new RuntimeException("Sessão não encontrada: " + requestDTO.movieSessionId()));
+
+        List<Long> seatIds = requestDTO.seatIds();
+
+        List<Seat> lockedSeats;
+        try {
+            lockedSeats = seatService.lockSeats(seatIds, session.getId());
+        } catch (Exception e) {
+            throw new RuntimeException("Assentos não disponíveis. " + e.getMessage());
+        }
+
+        Payment payment;
+        try {
+            double totalAmount = calculateTotal(lockedSeats, session);
+            payment = paymentService.processPayment(user.getId(), requestDTO.paymentMethod(), totalAmount);
+
+        } catch (Exception e) {
+            seatService.releaseSeats(seatIds);
+            throw new RuntimeException("Pagamento falhou. Compra cancelada. " + e.getMessage());
+        }
+
+        if ("APPROVED".equals(payment.getStatus())) {
+
+            Purchase newPurchase = new Purchase();
+            newPurchase.setUser(user);
+            newPurchase.setMovieSession(session);
+            newPurchase.setSeats(new HashSet<>(lockedSeats));
+            newPurchase.setPurchaseTimestamp(LocalDateTime.now());
+
+            Purchase savedPurchase = purchaseRepository.save(newPurchase);
+
+            ticketService.generateTickets(savedPurchase);
+
+            return savedPurchase;
+
+        } else {
+            seatService.releaseSeats(seatIds);
+            throw new RuntimeException("Pagamento foi recusado. Tente novamente.");
+        }
+    }
+
+    private Double calculateTotal(List<Seat> seats, MovieSession session) {
+        // Exemplo: return seats.size() * session.getTicketPrice();
+        return seats.size() * 15.0;
+    }
+
+    //
+    // ... Seus outros métodos (findPurchaseById, findPurchasesByUserId, etc.) ...
+    //
+}
