@@ -1,6 +1,6 @@
 //package br.com.cinema.cinemasystem.controller;
 //
-//
+//import br.com.cinema.cinemasystem.dto.PurchaseRequestDTO;
 //import br.com.cinema.cinemasystem.model.Purchase;
 //import br.com.cinema.cinemasystem.service.PurchaseService;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,13 @@
 //    private PurchaseService purchaseService;
 //
 //    @PostMapping
-//    public ResponseEntity<Purchase> createPurchase(@RequestBody Purchase purchase){
-//        Purchase newPurchase = purchaseService.createPurchase(purchase);
+//    public ResponseEntity<Purchase> createPurchase(@RequestBody PurchaseRequestDTO requestDTO) {
+//        Purchase newPurchase = purchaseService.createPurchase(requestDTO);
 //        return ResponseEntity.status(HttpStatus.CREATED).body(newPurchase);
 //    }
 //
 //    @GetMapping("/{purchaseId}")
-//    public ResponseEntity<PurchaseDTO> getPurchaseById(@RequestBody Long purchaseId){
+//    public ResponseEntity<PurchaseDTO> getPurchaseById(@PathVariable Long purchaseId) {
 //        PurchaseDTO purchaseDTO = purchaseService.findPurchaseById(purchaseId);
 //        return ResponseEntity.ok(purchaseDTO);
 //    }
@@ -34,5 +34,4 @@
 //        List<PurchaseDTO> purchases = purchaseService.findPurchasesByUserId(userId);
 //        return ResponseEntity.ok(purchases);
 //    }
-//
 //}
