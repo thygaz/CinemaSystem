@@ -27,12 +27,18 @@ public class Session {
     public Session() {
     }
 
-    public Session(UUID uuid, Film film, LocalDateTime dateTime, double price) {
-        this.uuid = uuid;
+    public Session(Film film, LocalDateTime dateTime, double price) {
         this.film = film;
         this.dateTime = dateTime;
         this.price = price;
     }
+
+//    public Session(UUID uuid, Film film, LocalDateTime dateTime, double price) {
+//        this.uuid = uuid;
+//        this.film = film;
+//        this.dateTime = dateTime;
+//        this.price = price;
+//    }
 
     public UUID getUuid() {
         return uuid;

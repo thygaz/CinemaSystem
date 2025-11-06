@@ -1,10 +1,14 @@
 package br.com.cinema.cinemasystem.service;
 
+import br.com.cinema.cinemasystem.dto.FilmResponseDTO;
+import br.com.cinema.cinemasystem.dto.SessionRequestDTO;
+import br.com.cinema.cinemasystem.dto.SessionResponseDTO;
 import br.com.cinema.cinemasystem.model.Film;
 import br.com.cinema.cinemasystem.model.Session;
 import br.com.cinema.cinemasystem.repository.FilmRepository;
 import br.com.cinema.cinemasystem.repository.SessionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,30 +25,67 @@ public class SessionService {
         this.filmRepository = filmRepository;
     }
 
-    public Session save(Session session) {
-        // precisa validar se o filme existe
-        Film film = filmRepository.findById(session.getFilm().getUuid())
-                .orElseThrow(() -> new RuntimeException("Não foi possível criar a sessão, filme não encontrado."));
+    @Transactional
+    public SessionResponseDTO create(SessionRequestDTO sessionRequestDTO) {
+        Film film = filmRepository.findById(sessionRequestDTO.filmUuid())
+                .orElseThrow(() -> new RuntimeException("Filme não encontrado."));
 
-        return sessionRepository.save(session);
+        Session session = new Session(film, sessionRequestDTO.dateTime(), sessionRequestDTO.price());
+
+        Session savedSession = sessionRepository.save(session);
+
+        FilmResponseDTO filmResponseDTO = new FilmResponseDTO(film.getUuid(), film.getName());
+
+        return new SessionResponseDTO(savedSession.getUuid(),
+                filmResponseDTO,
+                savedSession.getDateTime(),
+                savedSession.getPrice());
     }
 
-    public List<Session> findAll() {
-        return sessionRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<SessionResponseDTO> findAll() {
+        return sessionRepository.findAll()
+                .stream()
+                .map(session -> new SessionResponseDTO(session.getUuid(),
+                        new FilmResponseDTO(
+                                session.getFilm().getUuid(),
+                                session.getFilm().getName()
+                        ),
+                        session.getDateTime(),
+                        session.getPrice()))
+                .toList();
     }
 
-    public Optional<Session> findById(UUID uuid) {
-        return sessionRepository.findById(uuid);
+    @Transactional(readOnly = true)
+    public Optional<SessionResponseDTO> findById(UUID uuid) {
+        return sessionRepository.findById(uuid)
+                .map(session -> new SessionResponseDTO(session.getUuid(),
+                        new FilmResponseDTO(
+                                session.getFilm().getUuid(),
+                                session.getFilm().getName()
+                        ),
+                        session.getDateTime(),
+                        session.getPrice()));
     }
 
-    // criar métodU que lista as sessões de um filme específico
-    public List<Session> listByFilm(UUID uuid) {
-        Film film = filmRepository.findById(uuid)
-                .orElseThrow(() -> new RuntimeException("Esse filme não está em nenhuma sessão."));
+    @Transactional(readOnly = true)
+    public List<SessionResponseDTO> findByFilmId(UUID filmUuid) {
+        Film film = filmRepository.findById(filmUuid)
+                .orElseThrow(() -> new RuntimeException("Filme não encontrado."));
 
-        return sessionRepository.findByFilm(film);
+        return sessionRepository.findByFilm(film)
+                .stream()
+                .map(session -> new SessionResponseDTO(session.getUuid(),
+                        new FilmResponseDTO(
+                                session.getFilm().getUuid(),
+                                session.getFilm().getName()
+                        ),
+                        session.getDateTime(),
+                        session.getPrice()))
+                .toList();
     }
 
+    @Transactional
     public void delete(UUID uuid) {
         if (sessionRepository.existsById(uuid)) {
             sessionRepository.deleteById(uuid);
