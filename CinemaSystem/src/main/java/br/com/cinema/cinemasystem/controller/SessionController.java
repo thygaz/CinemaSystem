@@ -1,5 +1,7 @@
 package br.com.cinema.cinemasystem.controller;
 
+import br.com.cinema.cinemasystem.dto.SessionRequestDTO;
+import br.com.cinema.cinemasystem.dto.SessionResponseDTO;
 import br.com.cinema.cinemasystem.model.Session;
 import br.com.cinema.cinemasystem.service.SessionService;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +22,20 @@ public class SessionController {
     }
 
     @PostMapping
-    public Session save(@RequestBody Session session) {
-        return sessionService.save(session);
+    public SessionResponseDTO save(@RequestBody SessionRequestDTO sessionRequestDTO) {
+        return sessionService.create(sessionRequestDTO);
     }
 
     @GetMapping(name = "/sessions/")
-    public List<Session> listAll() {
+    public List<SessionResponseDTO> listAll() {
         return sessionService.findAll();
     }
 
     @GetMapping(name = "/sessions/{uuid}")
-    public ResponseEntity<?> findById(@PathVariable UUID uuid) {
-        Optional<Session> session = sessionService.findById(uuid);
-
-        return ResponseEntity.ok(session);
+    public ResponseEntity<SessionResponseDTO> findById(@PathVariable UUID uuid) {
+        return sessionService.findById(uuid)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(name = "/sessions/{uuid}")
