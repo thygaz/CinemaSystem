@@ -1,11 +1,12 @@
-package service;
-
-import br.com.cinema.cinemasystem.model.Ingressos;
-import br.com.cinema.cinemasystem.repository.IngressosRepository;
-import org.springframework.stereotype.Service;
+package br.com.cinema.cinemasystem.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import br.com.cinema.cinemasystem.model.Ingressos;
+import br.com.cinema.cinemasystem.repository.IngressosRepository;
 
 @Service
 public class IngressosService {
