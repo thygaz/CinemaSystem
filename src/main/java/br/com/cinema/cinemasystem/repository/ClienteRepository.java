@@ -1,10 +1,11 @@
-package repository;
+package br.com.cinema.cinemasystem.repository;
 
-import br.com.cinema.cinemasystem.model.Cliente;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import br.com.cinema.cinemasystem.model.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
