@@ -1,13 +1,9 @@
-package model;
+package br.com.cinema.cinemasystem.model;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Entidade JPA de cliente.
- */
 @Entity
 public class Cliente {
 
