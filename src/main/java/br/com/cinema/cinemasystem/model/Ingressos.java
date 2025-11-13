@@ -1,12 +1,10 @@
-import model.Ingressos;
+package br.com.cinema.cinemasystem.model;
 
-package model;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 
-import jakarta.persistence.*;
-
-/**
- * Entidade JPA de ingresso de cinema.
- */
 @Entity
 public class Ingressos {
 
