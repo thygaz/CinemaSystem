@@ -1,11 +1,12 @@
-package service;
-
-import br.com.cinema.cinemasystem.model.Cliente;
-import br.com.cinema.cinemasystem.repository.ClienteRepository;
-import org.springframework.stereotype.Service;
+package br.com.cinema.cinemasystem.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import br.com.cinema.cinemasystem.model.Cliente;
+import br.com.cinema.cinemasystem.repository.ClienteRepository;
 
 @Service
 public class ClienteService {
