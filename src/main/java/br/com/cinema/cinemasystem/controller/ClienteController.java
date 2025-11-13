@@ -1,4 +1,4 @@
-package controller;
+package br.com.cinema.cinemasystem.controller;
 
 import br.com.cinema.cinemasystem.model.Cliente;
 import br.com.cinema.cinemasystem.service.ClienteService;
