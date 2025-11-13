@@ -1,5 +1,8 @@
 package br.com.cinema.cinemasystem.service;
 
+import br.com.cinema.cinemasystem.dto.SessionResponseDTO;
+import br.com.cinema.cinemasystem.dto.TicketRequestDTO;
+import br.com.cinema.cinemasystem.dto.TicketResponseDTO;
 import br.com.cinema.cinemasystem.model.Session;
 import br.com.cinema.cinemasystem.model.Ticket;
 import br.com.cinema.cinemasystem.repository.SessionRepository;
@@ -21,16 +24,35 @@ public class TicketService {
         this.sessionRepository = sessionRepository;
     }
 
-    public Ticket save(Ticket ticket) {
-        // precisa validar se sessão a existe
-        Session session = sessionRepository.findById(ticket.getSession().getUuid())
-                .orElseThrow(() -> new RuntimeException("Não foi possível criar o ingresso, sessão não encontrada"));
+    public TicketResponseDTO create(TicketRequestDTO ticketRequestDTO) {
+        Session session = sessionRepository.findById(ticketRequestDTO.sessionUuid())
+                .orElseThrow(() -> new RuntimeException("Sessão não encontrada"));
 
-        return ticketRepository.save(ticket);
+        Ticket ticket = new Ticket(ticketRequestDTO.sessionUuid(), session);
+
+        Ticket savedTicket = ticketRepository.save(ticket);
+
+        SessionResponseDTO sessionResponseDTO = new SessionResponseDTO(session.getUuid(), session.getFilm(), session.getDateTime(), session.getPrice());
+
+        return new TicketResponseDTO(savedTicket.getUuid(),
+                sessionResponseDTO);
     }
 
     public List<Ticket> findAll() {
         return ticketRepository.findAll();
+    }
+
+    public List<TicketResponseDTO> findAll() {
+        return ticketRepository.findAll()
+                .stream()
+                .map(ticket -> new TicketResponseDTO(ticket.getUuid(),
+                        new SessionResponseDTO(
+                                ticket.getSession().getUuid(),
+                                ticket.getSession().getFilm(),
+                                ticket.getSession().getDateTime(),
+                                ticket.getSession().getPrice()
+                        )))
+                .toList();
     }
 
     public Optional<Ticket> findById(UUID uuid) {
