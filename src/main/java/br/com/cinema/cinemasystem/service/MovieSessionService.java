@@ -1,7 +1,7 @@
 package br.com.cinema.cinemasystem.service;
 
-import br.com.cinema.cinemasystem.dto.MovieSessionRequestDTO;
-import br.com.cinema.cinemasystem.dto.MovieSessionResponseDTO;
+import br.com.cinema.cinemasystem.dto.movieSession.MovieSessionRequestDTO;
+import br.com.cinema.cinemasystem.dto.movieSession.MovieSessionResponseDTO;
 import br.com.cinema.cinemasystem.exception.ResourceNotFoundException;
 import br.com.cinema.cinemasystem.model.Movie;
 import br.com.cinema.cinemasystem.model.MovieSession;
