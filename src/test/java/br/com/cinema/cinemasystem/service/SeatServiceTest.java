@@ -56,9 +56,9 @@ public class SeatServiceTest {
         availableSeat.setId(10L);
         availableSeat.setStatus(SeatStatus.AVAILABLE);
 
-        availableSeat = new Seat();
-        availableSeat.setId(11L);
-        availableSeat.setStatus(SeatStatus.LOCKED);
+        availableSeat2 = new Seat();
+        availableSeat2.setId(11L);
+        availableSeat2.setStatus(SeatStatus.AVAILABLE);
 
         lockedSeat = new Seat();
         lockedSeat.setId(12L);
