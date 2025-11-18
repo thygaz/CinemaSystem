@@ -1,7 +1,7 @@
 package br.com.cinema.cinemasystem.controller;
 
-import br.com.cinema.cinemasystem.dto.MovieSessionRequestDTO;
-import br.com.cinema.cinemasystem.dto.MovieSessionResponseDTO;
+import br.com.cinema.cinemasystem.dto.movieSession.MovieSessionRequestDTO;
+import br.com.cinema.cinemasystem.dto.movieSession.MovieSessionResponseDTO;
 import br.com.cinema.cinemasystem.model.MovieSession;
 import br.com.cinema.cinemasystem.service.MovieSessionService;
 import org.springframework.http.HttpStatus;

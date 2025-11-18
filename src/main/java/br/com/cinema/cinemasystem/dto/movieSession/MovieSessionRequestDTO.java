@@ -1,4 +1,4 @@
-package br.com.cinema.cinemasystem.dto;
+package br.com.cinema.cinemasystem.dto.movieSession;
 
 import lombok.*;
 

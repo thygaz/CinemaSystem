@@ -1,5 +1,6 @@
 package br.com.cinema.cinemasystem.model;
 
+import br.com.cinema.cinemasystem.dto.seat.SeatStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +24,17 @@ public class Seat {
 
     @Column
     private Integer seatNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "theater_id")
+    private Theater theater;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SeatStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "locking_user_id")
+    private User lockingUser;
+
 }

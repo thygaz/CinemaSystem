@@ -29,4 +29,7 @@ public class Theater {
 
         @OneToMany(mappedBy = "theater")
         private List<MovieSession> sessions;
+
+        @OneToMany(mappedBy = "theater", fetch = FetchType.LAZY)
+        private List<Seat> seats;
 }
