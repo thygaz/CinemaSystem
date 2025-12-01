@@ -21,15 +21,15 @@ public class PaymentService {
     private final Supplier<Boolean> approvalSupplier;
 
     /**
-     * Construtor padrão usado pelo Spring (usa Random para decidir aprovação).
+     * Construtor usado pelo Spring — recebe apenas beans que o container conhece.
+     * Ele delega para o construtor principal, injetando um Supplier padrão (Random).
      */
     public PaymentService(PaymentRepository paymentRepository) {
         this(paymentRepository, () -> new Random().nextBoolean());
     }
 
     /**
-     * Construtor adicional que permite injetar um Supplier<Boolean> para determinar
-     * se o pagamento será aprovado — útil para testes unitários determinísticos.
+     * Construtor adicional para permitir injeção de um Supplier determinístico (útil para testes).
      */
     public PaymentService(PaymentRepository paymentRepository, Supplier<Boolean> approvalSupplier) {
         this.paymentRepository = paymentRepository;
@@ -40,36 +40,21 @@ public class PaymentService {
         return paymentRepository.findAll();
     }
 
-    /**
-     * Processa um pagamento "simulado".
-     * @param purchase objeto Purchase associado ao pagamento
-     * @param paymentMethod método de pagamento (ex: CREDIT_CARD, PIX)
-     * @param totalAmount valor do pagamento
-     * @return Payment persistido (com status APPROVED ou DECLINED)
-     */
     public Payment processPayment(Purchase purchase, String paymentMethod, BigDecimal totalAmount) {
         Payment payment = new Payment();
-        // associa a purchase (assumindo que Purchase já tem id quando existir)
+
         payment.setPurchase(purchase);
         payment.setAmount(totalAmount);
         payment.setPaymentMethod(paymentMethod);
 
-        // decide aprovação via supplier (injetável)
         boolean approved = Boolean.TRUE.equals(approvalSupplier.get());
         payment.setStatus(approved ? PaymentStatus.APPROVED : PaymentStatus.DECLINED);
-
-        // metadados (transactionId, timestamp)
         payment.setTransactionId(UUID.randomUUID().toString());
         payment.setCreatedAt(LocalDateTime.now());
 
         return paymentRepository.save(payment);
     }
 
-    /**
-     * Recupera um pagamento por id.
-     * @param paymentId id do payment
-     * @return Payment ou lança RuntimeException se não encontrado
-     */
     public Payment getPaymentDetails(Long paymentId) {
         Optional<Payment> found = paymentRepository.findById(paymentId);
         return found.orElseThrow(() -> new RuntimeException("Pagamento não encontrado para o ID: " + paymentId));
