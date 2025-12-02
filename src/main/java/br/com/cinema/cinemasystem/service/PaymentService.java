@@ -21,15 +21,15 @@ public class PaymentService {
     private final Supplier<Boolean> approvalSupplier;
 
     /**
-     * Construtor usado pelo Spring — recebe apenas beans que o container conhece.
-     * Ele delega para o construtor principal, injetando um Supplier padrão (Random).
+     * Construtor usado pelo Spring: recebe apenas o PaymentRepository (bean conhecido).
+     * Delegamos ao construtor principal injetando um Supplier padrão (aleatório).
      */
     public PaymentService(PaymentRepository paymentRepository) {
         this(paymentRepository, () -> new Random().nextBoolean());
     }
 
     /**
-     * Construtor adicional para permitir injeção de um Supplier determinístico (útil para testes).
+     * Construtor auxiliar para testes — permite injetar um Supplier determinístico.
      */
     public PaymentService(PaymentRepository paymentRepository, Supplier<Boolean> approvalSupplier) {
         this.paymentRepository = paymentRepository;
@@ -42,7 +42,6 @@ public class PaymentService {
 
     public Payment processPayment(Purchase purchase, String paymentMethod, BigDecimal totalAmount) {
         Payment payment = new Payment();
-
         payment.setPurchase(purchase);
         payment.setAmount(totalAmount);
         payment.setPaymentMethod(paymentMethod);
@@ -56,7 +55,7 @@ public class PaymentService {
     }
 
     public Payment getPaymentDetails(Long paymentId) {
-        Optional<Payment> found = paymentRepository.findById(paymentId);
-        return found.orElseThrow(() -> new RuntimeException("Pagamento não encontrado para o ID: " + paymentId));
+        Optional<Payment> opt = paymentRepository.findById(paymentId);
+        return opt.orElseThrow(() -> new RuntimeException("Pagamento não encontrado para o ID: " + paymentId));
     }
 }
