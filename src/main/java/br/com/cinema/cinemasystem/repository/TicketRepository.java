@@ -1,13 +1,12 @@
 package br.com.cinema.cinemasystem.repository;
 
-import java.util.List;
-
+import br.com.cinema.cinemasystem.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.cinema.cinemasystem.model.Ticket;
+import java.util.List;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    List<Ticket> findByClienteId(Long clienteId);
+    List<Ticket> findByUserId(Long userId);
 }
