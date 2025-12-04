@@ -1,6 +1,6 @@
 # 🎬 CinemaSystem
 
-![Build Status]()
+![Build Status](https://github.com/thygaz/CinemaSystem/actions/workflows/ci.yml/badge.svg)
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring-Boot-brightgreen)
 
