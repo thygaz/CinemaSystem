@@ -20,17 +20,11 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final Supplier<Boolean> approvalSupplier;
 
-    /**
-     * Construtor usado pelo Spring: recebe apenas o PaymentRepository (bean conhecido).
-     * Delegamos ao construtor principal injetando um Supplier padrão (aleatório).
-     */
     public PaymentService(PaymentRepository paymentRepository) {
         this(paymentRepository, () -> new Random().nextBoolean());
     }
 
-    /**
-     * Construtor auxiliar para testes — permite injetar um Supplier determinístico.
-     */
+
     public PaymentService(PaymentRepository paymentRepository, Supplier<Boolean> approvalSupplier) {
         this.paymentRepository = paymentRepository;
         this.approvalSupplier = approvalSupplier;
@@ -46,10 +40,9 @@ public class PaymentService {
         payment.setAmount(totalAmount);
         payment.setPaymentMethod(paymentMethod);
 
-        boolean approved = Boolean.TRUE.equals(approvalSupplier.get());
-        payment.setStatus(approved ? PaymentStatus.APPROVED : PaymentStatus.DECLINED);
-        payment.setTransactionId(UUID.randomUUID().toString());
         payment.setCreatedAt(LocalDateTime.now());
+
+        payment.setStatus(PaymentStatus.APPROVED);
 
         return paymentRepository.save(payment);
     }

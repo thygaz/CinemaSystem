@@ -20,13 +20,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PaymentServiceTest {
+class  PaymentServiceTest {
 
     @Mock
     private PaymentRepository paymentRepository;
-
-    // injetamos um supplier determinístico por construtor em cada teste abaixo
-    // preferimos não usar @InjectMocks porque queremos controlar o supplier em cada caso
 
     @Test
     void testGetAllPayments_Success() {
