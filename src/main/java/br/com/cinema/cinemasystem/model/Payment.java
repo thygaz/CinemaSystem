@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,29 +19,19 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * Relação 1:1 com Purchase.
-     * O pagamento está vinculado a uma compra específica.
-     * @MapsId indica que o ID do pagamento é o mesmo ID da compra.
-     */
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "purchase_id")
-    private Purchase purchase;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(nullable = false)
     private BigDecimal amount;
 
-    @Column(nullable = false)
-    private String paymentMethod; // Ex: CREDIT_CARD, PIX, CASH
+    @Column(name = "payment_method")
+    private String paymentMethod;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private PaymentStatus status; // APPROVED, DECLINED, PENDING
+    private PaymentStatus status;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDateTime paymentDate;
 
-    @Column(unique = true)
-    private String transactionId; // ID simulado de transação (mock de gateway)
+    private String transactionId;
 }

@@ -3,7 +3,9 @@ package br.com.cinema.cinemasystem.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -38,8 +40,11 @@ public class Purchase {
             inverseJoinColumns = @JoinColumn(name = "seat_id")
     )
     @ToString.Exclude
-    private Set<Seat> seats;
+    private List<Seat> seats;
 
     @Column(nullable = false)
     private LocalDateTime purchaseTimestamp;
+
+    @Column(nullable = false)
+    private BigDecimal totalAmount;
 }
