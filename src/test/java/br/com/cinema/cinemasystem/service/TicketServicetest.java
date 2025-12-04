@@ -72,7 +72,7 @@ public class TicketServiceTest {
 
     @Test
     void testGenerateTickets_Success() {
-        // Cria um usuário e assentos simulados
+        
         User user = new User();
         user.setId(1L);
 
@@ -88,12 +88,12 @@ public class TicketServiceTest {
         purchase.setUser(user);
         purchase.setSeats(new HashSet<>(Arrays.asList(seat1, seat2)));
 
-        // Simula o comportamento do save para retornar o mesmo objeto
+        
         when(ticketRepository.save(any(Ticket.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         ticketService.generateTickets(purchase);
 
-        // Verifica se salvou os tickets
+        
         verify(ticketRepository, times(2)).save(any(Ticket.class));
     }
 
