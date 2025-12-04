@@ -8,7 +8,7 @@ Sistema de gestão de cinemas desenvolvido para a disciplina de **Gestão e Qual
 
 ## 👥 Integrantes
 * [Maurício Leal - 12724157145]
-* [Yuri Torquato - ]
+* [Yuri Torquato - 12724219602]
 * [João Pedro - ]
 * [Vinicius Liro - ]
 
