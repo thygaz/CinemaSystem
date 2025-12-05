@@ -38,11 +38,11 @@ class PaymentServiceTest {
 
         Payment saved = paymentService.processPayment(userId, "CREDIT_CARD", amount);
 
-        ArgumentCaptor<Payment> captor = ArgumentCaptor.forClass(Payment.class);
+
+
+        assertNotNull(saved);ArgumentCaptor<Payment> captor = ArgumentCaptor.forClass(Payment.class);
         verify(paymentRepository, times(1)).save(captor.capture());
         Payment captured = captor.getValue();
-
-        assertNotNull(saved);
         assertEquals(PaymentStatus.APPROVED, captured.getStatus());
         assertEquals("CREDIT_CARD", captured.getPaymentMethod());
         assertEquals(amount, captured.getAmount());
