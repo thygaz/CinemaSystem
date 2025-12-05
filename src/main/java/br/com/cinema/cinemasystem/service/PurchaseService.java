@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,16 +60,13 @@ public class PurchaseService {
             );
 
             if (payment.getStatus() != PaymentStatus.APPROVED) {
-                seatService.releaseSeats(seatIds);
                 throw new RuntimeException("Pagamento recusado.");
             }
-
 
         } catch (Exception e) {
             seatService.releaseSeats(seatIds);
             throw new RuntimeException("Falha no pagamento: " + e.getMessage());
         }
-
         Purchase newPurchase = new Purchase();
         newPurchase.setUser(user);
         newPurchase.setMovieSession(session);
